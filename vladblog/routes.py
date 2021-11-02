@@ -12,8 +12,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route('/')
 @app.route('/home')
 def home():
-    posts = Post.select()
-    return object_list('home.html', query=posts, context_variable='posts', paginate_by=2, title='Home')
+    posts = Post.select().order_by(Post.date_posted.desc())
+    return object_list('home.html', query=posts, context_variable='posts', paginate_by=5, title='Home')
 
 
 @app.route('/about')
@@ -67,10 +67,6 @@ def save_picture(form_picture):
     resized_image = Image.open(form_picture)
     resized_image.thumbnail(output_size)
     resized_image.save(picture_path)
-
-    prev_picture = os.path.join(app.root_path, 'static/profile_pics', current_user.image_file)
-    if os.path.exists(prev_picture):
-        os.remove(prev_picture)
 
     return picture_file_name
 
@@ -143,3 +139,11 @@ def delete_post(post_id):
     post.delete_instance()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
+
+
+@app.route('/user/<string:username>')
+def user_posts(username):
+    user = get_object_or_404(User.select(), User.username == username)
+    posts = Post.select().where(Post.user_id == user).order_by(Post.date_posted.desc())
+    return object_list('user_posts.html', query=posts, context_variable='posts', paginate_by=5, title='Home', user=user,
+                       posts_count=posts.count())
