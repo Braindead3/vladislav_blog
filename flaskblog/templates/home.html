@@ -6,46 +6,46 @@
             <img class="rounded-circle article-img" src="{{ url_for('static',filename ='profile_pics/' + post.user_id.image_file) }}">
             <div class="media-body">
                 <div class="article-metadata">
-                  <a class="mr-2 " href="{{ url_for('user_posts', username=post.user_id.username) }}">{{ post.user_id.username }}</a>
+                  <a class="mr-2 " href="{{ url_for('users.user_posts', username=post.user_id.username) }}">{{ post.user_id.username }}</a>
                   <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
                 </div>
-                <h2><a class="article-title" href="{{ url_for('selected_post', post_id=post.id) }}">{{ post.title }}</a></h2>
+                <h2><a class="article-title" href="{{ url_for('posts.selected_post', post_id=post.id) }}">{{ post.title }}</a></h2>
                 <p class="article-content">{{ post.content }}</p>
             </div>
         </article>
     {% endfor %}
     {% if pagination.get_page()>=3 and pagination.get_page()<=pagination.get_page_count()-2 %}
-        <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = 1) }}  ">{{ 1 }}</a>
+        <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = 1) }}  ">{{ 1 }}</a>
         ...
         {% for page_num in range(pagination.get_page()-1,pagination.get_page()+2) %}
             {% if  pagination.get_page() == page_num %}
-                <a  class="btn btn-info mb-4" href="{{ url_for('home', page = page_num) }}  ">{{ page_num }}</a>
+                <a  class="btn btn-info mb-4" href="{{ url_for('main.home', page = page_num) }}  ">{{ page_num }}</a>
             {% else %}
-                <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = page_num) }}  ">{{ page_num }}</a>
+                <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}  ">{{ page_num }}</a>
             {% endif %}
         {% endfor %}
         ...
-        <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = pagination.get_page_count()) }}  ">{{ pagination.get_page_count() }}</a>
+        <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = pagination.get_page_count()) }}  ">{{ pagination.get_page_count() }}</a>
     {% endif %}
     {% if pagination.get_page()<3 %}
         {% for page_num in range(1,4) %}
             {% if  pagination.get_page() == page_num %}
-                <a  class="btn btn-info mb-4" href="{{ url_for('home', page = page_num) }}  ">{{ page_num }}</a>
+                <a  class="btn btn-info mb-4" href="{{ url_for('main.home', page = page_num) }}  ">{{ page_num }}</a>
             {% else %}
-                <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = page_num) }}  ">{{ page_num }}</a>
+                <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}  ">{{ page_num }}</a>
             {% endif %}
         {% endfor %}
         ...
-        <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = pagination.get_page_count()) }}  ">{{ pagination.get_page_count() }}</a>
+        <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = pagination.get_page_count()) }}  ">{{ pagination.get_page_count() }}</a>
     {% endif %}
     {% if pagination.get_page()==pagination.get_page_count()-1 or pagination.get_page()==pagination.get_page_count()%}
-        <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = 1) }}  ">{{ 1 }}</a>
+        <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = 1) }}  ">{{ 1 }}</a>
         ...
         {% for page_num in range(pagination.get_page_count()-2,pagination.get_page_count()+1) %}
             {% if  pagination.get_page() == page_num %}
-                <a  class="btn btn-info mb-4" href="{{ url_for('home', page = page_num) }}  ">{{ page_num }}</a>
+                <a  class="btn btn-info mb-4" href="{{ url_for('main.home', page = page_num) }}  ">{{ page_num }}</a>
             {% else %}
-                <a  class="btn btn-outline-info mb-4" href="{{ url_for('home', page = page_num) }}  ">{{ page_num }}</a>
+                <a  class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page = page_num) }}  ">{{ page_num }}</a>
             {% endif %}
         {% endfor %}
     {% endif %}
