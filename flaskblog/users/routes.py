@@ -63,7 +63,7 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    return render_template('Account.html', title='Account', image_file_src=image_file_src, form=form)
+    return render_template('account.html', title='Account', image_file_src=image_file_src, form=form)
 
 
 @users.route('/user/<string:username>')
